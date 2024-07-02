@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main {
+  flex-grow: 1;
+}
+.divNavbar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+@media (width < 960px) {
+  .divNavbar {
+    display: none;
+  }
+}
