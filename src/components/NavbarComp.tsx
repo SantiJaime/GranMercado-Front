@@ -40,7 +40,7 @@ const NavbarComp = () => {
   }, []);
 
   const navList = (
-    <div className="mb-4 mt-2 flex flex-col gap-6 lg:my-0 lg:flex-row lg:items-center">
+    <div className="my-4 flex flex-col gap-6 lg:flex-row lg:items-center">
       {NAVIGATION.map((item) => (
         <Link
           to={item.href}
@@ -52,7 +52,7 @@ const NavbarComp = () => {
         </Link>
       ))}
       <button
-        className="flex items-center gap-1 transition hover:text-blue-600"
+        className="flex items-center gap-1 text-gray-900 transition hover:text-blue-600"
         type="button"
         aria-label="Ver carrito de compras"
       >
@@ -74,7 +74,7 @@ const NavbarComp = () => {
           />
         </Link>
         <div className="flex items-center gap-4">
-          <div className="mr-4 hidden lg:block">{navList}</div>
+          <div className="hidden lg:block">{navList}</div>
           <IconButton
             variant="text"
             className="text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
