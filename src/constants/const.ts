@@ -1,0 +1,2 @@
+export const CAROUSEL_IMAGES1 = ["/sliders/slider1.webp", "/sliders/slider2.webp", "/sliders/slider3.webp"];
+export const CAROUSEL_IMAGES2 = ["/sliders/slider4.webp", "/sliders/slider5.webp", "/sliders/slider6.webp"];

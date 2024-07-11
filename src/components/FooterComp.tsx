@@ -36,7 +36,7 @@ const FooterComp = () => {
           </li>
         </ul>
       </div>
-      <hr className="my-6 border-blue-gray-50" />
+      <hr className="my-6" />
       <Typography className="text-center font-normal">
         &copy; 2024 El Gran Mercado
       </Typography>

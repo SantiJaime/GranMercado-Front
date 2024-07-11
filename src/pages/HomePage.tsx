@@ -1,5 +1,4 @@
-import { products as initialProducts } from "../mocks/products.json";
-import useFilters from "../hooks/useFilters";
+import { popularProducts as initialPopularProducts } from "../mocks/popularProducts.json";
 import { Col, Container, Row } from "react-bootstrap";
 import {
   Card,
@@ -8,80 +7,71 @@ import {
   CardFooter,
   Typography,
   Button,
-  Select,
-  Option,
 } from "@material-tailwind/react";
+import CarouselComp from "../components/CarouselComp";
+import { useState } from "react";
+import { CAROUSEL_IMAGES1, CAROUSEL_IMAGES2 } from "../constants/const";
+import ExplorerComp from "../components/ExplorerComp";
 
 const HomePage = () => {
-  const { filterProducts, setFilters } = useFilters();
+  const [popularProducts] = useState(initialPopularProducts);
 
-  const filteredProducts = filterProducts(initialProducts);
-
-  const handleChange = (value: string) => {
-    setFilters((prevState) => ({
-      ...prevState,
-      category: value,
-    }));
-  };
   return (
-    <Container className="my-8" fluid>
-      <div className="w-72">
-        <Select label="Filtro" onChange={(value) => handleChange(value as string)}>
-          <Option value="laptops">Notebooks</Option>
-          <Option value="smartphones">Celulares</Option>
-          <Option>Material Tailwind Vue</Option>
-          <Option>Material Tailwind Angular</Option>
-          <Option>Material Tailwind Svelte</Option>
-        </Select>
-      </div>
-      <Row>
-        {filteredProducts.map((product) => (
-          <Col
-            lg={4}
-            md={6}
-            sm={12}
-            key={product.id}
-            className="my-4 flex justify-center"
-          >
-            <Card className="w-96">
-              <CardHeader shadow={false} floated={false} className="h-96">
-                <img
-                  src={product.thumbnail}
-                  alt={product.title}
-                  className="size-full object-cover"
-                />
-              </CardHeader>
-              <CardBody>
-                <div className="mb-2 flex items-center justify-between">
-                  <Typography color="blue-gray" className="font-medium">
-                    {product.title}
-                  </Typography>
-                  <Typography color="blue-gray" className="font-medium">
-                    ${product.price}
-                  </Typography>
-                </div>
-                <Typography
-                  variant="small"
-                  color="gray"
-                  className="font-normal opacity-75"
-                >
-                  {product.description}
-                </Typography>
-              </CardBody>
-              <CardFooter className="pt-0">
-                <Button
-                  fullWidth={true}
-                  variant="gradient"
-                  className="shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                >
-                  Add to Cart
-                </Button>
-              </CardFooter>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <>
+      {window.innerWidth >= 960 ? (
+        <CarouselComp images={CAROUSEL_IMAGES1} />
+      ) : (
+        <CarouselComp images={CAROUSEL_IMAGES2} />
+      )}
+      <Container className="my-8" fluid>
+        <section className="rounded-lg bg-gray-200 p-3">
+          <Typography variant="h4">Nuestros productos más comprados</Typography>
+          <Row>
+            {popularProducts.map((product) => (
+              <Col
+                lg={2}
+                sm={6}
+                xs={12}
+                key={product.id}
+                className="my-4 flex justify-center"
+              >
+                <Card className="flex flex-col justify-between">
+                  <div>
+                    <CardHeader shadow={false} floated={false}>
+                      <img
+                        src={product.thumbnail}
+                        alt={product.title}
+                        className="img-fluid"
+                      />
+                    </CardHeader>
+                    <CardBody>
+                      <Typography color="blue-gray" className="font-medium">
+                        {product.title}
+                      </Typography>
+                      <Typography color="blue-gray" className="font-medium">
+                        ${product.price}
+                      </Typography>
+                    </CardBody>
+                  </div>
+                  <CardFooter className="pt-0">
+                    <Button
+                      fullWidth={true}
+                      variant="gradient"
+                      className="shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                    >
+                      Add to Cart
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </section>
+        <section>
+          <ExplorerComp />
+        </section>
+      </Container>
+    </>
   );
 };
 
