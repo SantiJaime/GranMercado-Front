@@ -18,8 +18,19 @@ main {
   align-items: center;
   gap: 0.25rem;
 }
+.filtersClass{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
 @media (width < 960px) {
   .divNavbar {
     display: none;
+  }
+}
+@media (width < 768px){
+  .filtersClass{
+    flex-direction: column;
   }
 }

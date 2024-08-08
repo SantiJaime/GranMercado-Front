@@ -12,6 +12,7 @@ export const FILTER_MENU_OPTIONS = [
   {
     name: "Todos",
     category: "all",
+    icon: "/iconosCategorias/todo.png",
   },
   {
     name: "Maquillaje",

@@ -4,14 +4,20 @@ import {
   MenuList,
   MenuItem,
   Button,
+  Typography,
 } from "@material-tailwind/react";
-import {
-  FunnelIcon,
-} from "@heroicons/react/24/outline";
+import { FunnelIcon } from "@heroicons/react/24/outline";
 import { FILTER_MENU_OPTIONS } from "../constants/const";
 import useFilters from "../hooks/useFilters";
-const FilterComp = () => {
-  const { setFilters } = useFilters();
+import { type ChangeEvent } from "react";
+import { RangeInput } from "./Inputs";
+
+interface Props {
+  type: "Category" | "Price";
+}
+
+const FilterComp: React.FC<Props> = ({ type }) => {
+  const { setFilters, filters } = useFilters();
 
   const handleChangeCategory = (value: string) => {
     setFilters((prevState) => ({
@@ -20,29 +26,58 @@ const FilterComp = () => {
     }));
   };
 
+  const handleChangePrice = (ev: ChangeEvent<HTMLInputElement>) => {
+    const value = Number(ev.target.value);
+    setFilters((prevState) => ({
+      ...prevState,
+      minPrice: value,
+    }));
+  };
 
   return (
-    <Menu>
-      <MenuHandler>
-        <Button
-          variant="gradient"
-          className="flex items-center gap-1"
-        >
-          <FunnelIcon className="size-4" />
-          <span>Filtar por categoria</span>
-        </Button>
-      </MenuHandler>
-      <MenuList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {FILTER_MENU_OPTIONS.map(({ name, category, icon }) => (
-          <MenuItem key={name} onClick={() => handleChangeCategory(category)}>
+    <>
+      {type === "Category" ? (
+        <Menu>
+          <MenuHandler>
+            <Button variant="gradient" className="flex items-center gap-1">
+              <FunnelIcon className="size-4" />
+              <span>Filtar por categoria</span>
+            </Button>
+          </MenuHandler>
+          <MenuList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {FILTER_MENU_OPTIONS.map(({ name, category, icon }) => (
+              <MenuItem
+                key={name}
+                onClick={() => handleChangeCategory(category)}
+              >
+                <div className="flex items-center gap-1">
+                  <img src={icon} alt={name} className="w-8" />
+                  <span>{name}</span>
+                </div>
+              </MenuItem>
+            ))}
+          </MenuList>
+        </Menu>
+      ) : (
+        type === "Price" && (
+          <div className="w-80">
+            <Typography variant="h6">Precio a partir de:</Typography>
             <div className="flex items-center gap-1">
-              <img src={icon} alt={name} className="w-8" />
-              <span>{name}</span>
+              <RangeInput
+                id="price-range-filter"
+                value={Number(filters.minPrice)}
+                onChange={handleChangePrice}
+                min={0}
+                max={15000}
+              />
+              <Typography variant="h6">
+                ${Math.round(filters.minPrice)}
+              </Typography>
             </div>
-          </MenuItem>
-        ))}
-      </MenuList>
-    </Menu>
+          </div>
+        )
+      )}
+    </>
   );
 };
 

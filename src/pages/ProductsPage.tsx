@@ -20,8 +20,9 @@ const ProductsPage = () => {
 
   return (
     <>
-      <div className="mt-8 flex justify-center">
-        <FilterComp />
+      <div className="filtersClass mt-8">
+        <FilterComp type="Category" />
+        <FilterComp type="Price" />
       </div>
 
       <Container fluid className="my-8">
@@ -32,12 +33,20 @@ const ProductsPage = () => {
             .map((product) => <CardComp product={product} key={product.id} />)
             .slice(indexOfFirstProduct, indexOfLastProduct)}
         </Row>
-        <PaginationComp
-          productsPerPage={productsPerPage}
-          totalProducts={filteredProducts.length}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
+        {filteredProducts.length === 0 ? (
+          <div className="mt-8 text-center">
+            <Typography variant="h2">
+              No hay productos acordes al filtrado
+            </Typography>
+          </div>
+        ) : (
+          <PaginationComp
+            productsPerPage={productsPerPage}
+            totalProducts={filteredProducts.length}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
       </Container>
     </>
   );
