@@ -5,11 +5,11 @@ import {
   HomeIcon,
   PhoneIcon,
   ShoppingBagIcon,
-  ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { Image } from "react-bootstrap";
+import CartComp from "./CartComp";
 
 const NAVIGATION = [
   {
@@ -51,14 +51,7 @@ const NavbarComp = () => {
           <span>{item.name}</span>
         </Link>
       ))}
-      <button
-        className="flex items-center gap-1 text-gray-900 transition hover:text-blue-600"
-        type="button"
-        aria-label="Ver carrito de compras"
-      >
-        <ShoppingCartIcon className="size-5" />
-        <span>Carrito</span>
-      </button>
+      <CartComp />
     </div>
   );
 

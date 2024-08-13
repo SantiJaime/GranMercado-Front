@@ -44,17 +44,17 @@ const ProductView: React.FC<Props> = ({ product }) => {
               <Col sm={5}>
                 <Row className="justify-center">
                   <Col lg={6} sm={12}>
-                    <Image
-                      src={activeImage}
-                      alt={product.title}
-                      className="rounded-lg object-cover object-center"
-                      width={"100%"}
-                      fluid
-                    />
-
+                    <div className="flex min-h-96 items-center">
+                      <Image
+                        src={activeImage}
+                        alt={product.title}
+                        className="rounded-lg object-cover object-center"
+                        fluid
+                      />
+                    </div>
                     <div className="grid grid-cols-3 items-center gap-2">
                       {product.images.map((image, index) => (
-                        <img
+                        <Image
                           onClick={() => setActiveImage(image)}
                           src={image}
                           className="sombra w-full cursor-pointer rounded-lg object-contain object-center transition-all lg:object-cover "
