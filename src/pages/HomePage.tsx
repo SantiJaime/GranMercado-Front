@@ -12,6 +12,10 @@ import CarouselComp from "../components/CarouselComp";
 import { useState } from "react";
 import { CAROUSEL_IMAGES1, CAROUSEL_IMAGES2 } from "../constants/const";
 import ExplorerComp from "../components/ExplorerComp";
+import {
+  ArrowLongRightIcon,
+  ShoppingCartIcon,
+} from "@heroicons/react/24/outline";
 
 const HomePage = () => {
   const [popularProducts] = useState(initialPopularProducts);
@@ -53,13 +57,22 @@ const HomePage = () => {
                       </Typography>
                     </CardBody>
                   </div>
-                  <CardFooter className="pt-0">
+                  <CardFooter className="flex flex-col gap-y-2 pt-0">
                     <Button
                       fullWidth={true}
                       variant="gradient"
-                      className="shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                     >
-                      Add to Cart
+                      <ShoppingCartIcon className="size-5" />
+                      <span>Añadir al carrito</span>
+                    </Button>
+                    <Button
+                      fullWidth={true}
+                      variant="text"
+                      className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                    >
+                      <span>Ver más</span>
+                      <ArrowLongRightIcon className="size-5" />
                     </Button>
                   </CardFooter>
                 </Card>

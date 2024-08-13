@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { IFiltersContext } from "../types/types";
 
 interface Props {
   children: JSX.Element;

@@ -1,6 +1,4 @@
-import type { Dispatch, SetStateAction } from "react";
-
-export interface Product {
+interface Product {
   id: number;
   title: string;
   description: string;
@@ -9,11 +7,11 @@ export interface Product {
   thumbnail: string;
   images: string[];
 }
-export interface IFilters {
+interface IFilters {
   category: string;
   minPrice: number;
 }
-export interface IFiltersContext {
+interface IFiltersContext {
   filters: IFilters;
-  setFilters: Dispatch<SetStateAction<IFilters>>;
+  setFilters: React.Dispatch<React.SetStateAction<IFilters>>;
 }

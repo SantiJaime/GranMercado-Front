@@ -8,7 +8,9 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 import { Col } from "react-bootstrap";
-import { type Product } from "../types/types";
+// import { type Product } from "../types/types";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import ProductView from "./ProductView";
 
 interface Props {
   product: Product;
@@ -35,14 +37,16 @@ const CardComp: React.FC<Props> = ({ product }) => {
             </Typography>
           </CardBody>
         </div>
-        <CardFooter className="pt-0">
+        <CardFooter className="flex flex-col gap-y-2 pt-0">
           <Button
             fullWidth={true}
             variant="gradient"
-            className="shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+            className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
           >
-            Add to Cart
+            <ShoppingCartIcon className="size-5" />
+            <span>Añadir al carrito</span>
           </Button>
+          <ProductView product={product} />
         </CardFooter>
       </Card>
     </Col>
