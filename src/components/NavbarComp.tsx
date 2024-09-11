@@ -83,7 +83,9 @@ const NavbarComp = () => {
         </div>
         <div className="divNavbar">
           <Button variant="text" size="sm">
+            <Link to={"/iniciar-sesion"}>
             Iniciar sesión
+            </Link>
           </Button>
           <Button variant="gradient" size="sm">
             Registrarse
