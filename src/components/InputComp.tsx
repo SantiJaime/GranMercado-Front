@@ -9,12 +9,37 @@ interface Props extends InputAndSelect {
   placeholder: string;
   type: InputType;
   showPassButton?: JSX.Element;
+  showRepeatPassButton?: JSX.Element;
   onChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
 }
+interface RangeProps extends Partial<InputAndSelect> {
+  min: number;
+  max: number;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const InputComp: React.FC<Props> = ({
+export const RangeInput: React.FC<RangeProps> = ({
+  id,
+  value,
+  onChange,
+  min,
+  max,
+}) => {
+  return (
+    <input
+      id={id}
+      type="range"
+      value={value}
+      onChange={onChange}
+      min={min}
+      max={max}
+      className="w-full rounded-lg bg-gray-300"
+    />
+  );
+};
+export const InputComp: React.FC<Props> = ({
   name,
   type,
   placeholder,
@@ -26,6 +51,7 @@ const InputComp: React.FC<Props> = ({
   errors,
   touched,
   showPassButton,
+  showRepeatPassButton,
 }) => {
   return (
     <div className="mb-3">
@@ -45,15 +71,23 @@ const InputComp: React.FC<Props> = ({
           placeholder={placeholder}
           value={value}
         />
-        {name === "password" && (
+        {name === "password" ? (
           <div className="absolute inset-y-0 end-0 flex items-center pe-0.5">
             {showPassButton}
           </div>
+        ) : name === "repeatPassword" ? (
+          <div className="absolute inset-y-0 end-0 flex items-center pe-0.5">
+            {showRepeatPassButton}
+          </div>
+        ) : (
+          ""
         )}
         {errors && touched && (
           <div
             className={`${DIV_ICON_CLASSES} end-0 ${
-              name === "password" ? "pe-5" : "pe-3.5"
+              name === "password" || name === "repeatPassword"
+                ? "pe-5"
+                : "pe-3.5"
             }`}
           >
             <ExclamationCircleIcon className="size-5 text-red-500" />
@@ -64,5 +98,3 @@ const InputComp: React.FC<Props> = ({
     </div>
   );
 };
-
-export default InputComp;

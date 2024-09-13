@@ -1,30 +1,31 @@
 import { Button, IconButton, Typography } from "@material-tailwind/react";
 import { Form, Formik } from "formik";
 import { Container } from "react-bootstrap";
-import InputComp from "../components/InputComp";
+import { InputComp } from "../components/InputComp";
 import { EmailIcon } from "../components/Icons";
 import { EyeIcon, EyeSlashIcon, KeyIcon } from "@heroicons/react/24/outline";
 import { errorLoginSchema } from "../utils/validationSchemas";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { HIDE_PASSWORD_ICON_CLASSES } from "../constants/classes";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const iconClasses = "size-5 text-gray-900";
   const button = (
     <IconButton
       className="bg-transparent shadow-none"
       onClick={() => setShowPassword((prevState) => !prevState)}
     >
       {!showPassword ? (
-        <EyeIcon className={iconClasses} />
+        <EyeIcon className={HIDE_PASSWORD_ICON_CLASSES} />
       ) : (
-        <EyeSlashIcon className={iconClasses} />
+        <EyeSlashIcon className={HIDE_PASSWORD_ICON_CLASSES} />
       )}
     </IconButton>
   );
 
-  const createUser = (values: LoginUserValues) => {
+  const loginUser = (values: LoginUserValues) => {
     console.log(values);
   };
 
@@ -35,20 +36,20 @@ const LoginPage = () => {
           email: "",
           password: "",
         }}
-        onSubmit={(values) => createUser(values)}
+        onSubmit={(values) => loginUser(values)}
         validationSchema={errorLoginSchema}
       >
         {({ values, errors, touched, handleChange, handleSubmit }) => (
           <Form
             onSubmit={handleSubmit}
-            className="formWidth rounded-lg bg-gray-300 p-3"
+            className="formWidth rounded-lg bg-light-blue-300/40 p-3"
           >
             <Typography variant="h3" color="black">
               Inicia sesión con tu cuenta
             </Typography>
             <hr className="my-3" />
             <InputComp
-              id="createUserEmailId"
+              id="loginUserEmailId"
               name="email"
               placeholder="example@mail.com"
               type="text"
@@ -60,7 +61,7 @@ const LoginPage = () => {
               touched={touched.email}
             />
             <InputComp
-              id="createUserPasswordId"
+              id="loginUserPasswordId"
               name="password"
               placeholder="************"
               type={showPassword ? "text" : "password"}
@@ -73,9 +74,18 @@ const LoginPage = () => {
               showPassButton={button}
             />
             <div className="flex justify-end">
-              <Button variant="gradient" type="submit">
+              <Button variant="gradient" type="submit" color="light-blue" size="sm">
                 Iniciar sesión
               </Button>
+            </div>
+            <hr className="my-3" />
+            <div className="flex justify-center">
+              <Typography variant="paragraph">
+                <span>¿Aún no tienes una cuenta? </span>
+                <Link to="/registrarse" className="font-bold hover:underline">
+                  Haz click aquí
+                </Link>
+              </Typography>
             </div>
           </Form>
         )}

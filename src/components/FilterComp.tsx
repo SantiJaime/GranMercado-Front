@@ -9,8 +9,7 @@ import {
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { FILTER_MENU_OPTIONS } from "../constants/const";
 import useFilters from "../hooks/useFilters";
-import { type ChangeEvent } from "react";
-import { RangeInput } from "./Inputs";
+import { RangeInput } from "./InputComp";
 
 interface Props {
   type: "Category" | "Price";
@@ -26,7 +25,7 @@ const FilterComp: React.FC<Props> = ({ type }) => {
     }));
   };
 
-  const handleChangePrice = (ev: ChangeEvent<HTMLInputElement>) => {
+  const handleChangePrice = (ev: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(ev.target.value);
     setFilters((prevState) => ({
       ...prevState,

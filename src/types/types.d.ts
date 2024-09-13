@@ -29,8 +29,10 @@ interface InputAndSelect {
 type InputType = "text" | "email" | "password" | "textarea" | "date" | "number";
 
 interface CreateUserValues {
-  email: string,
-  password: string
+  email: string;
+  fullName: string;
+  password: string;
+  repeatPassword: string;
 }
 
-type LoginUserValues = Partial<CreateUserValues>
+type LoginUserValues = Partial<CreateUserValues>;
