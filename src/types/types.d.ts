@@ -35,4 +35,7 @@ interface CreateUserValues {
   repeatPassword: string;
 }
 
-type LoginUserValues = Partial<CreateUserValues>;
+interface LoginUserValues {
+  email: string;
+  password: string;
+}

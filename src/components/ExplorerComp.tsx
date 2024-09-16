@@ -36,12 +36,15 @@ const ExplorerComp = () => {
             <Col sm={6} className="flex flex-col justify-center py-1">
               <Typography variant="h3">{title}</Typography>
               <div className="mt-4 flex justify-center">
-                <Button variant="gradient">
-                  <Link to={to} className="flex items-center gap-1">
+                <Link to={to}>
+                  <Button
+                    variant="gradient"
+                    className="flex items-center gap-1"
+                  >
                     {icon}
                     <span>{buttonText}</span>
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
               </div>
             </Col>
             <Col

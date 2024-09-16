@@ -7,12 +7,17 @@ const ErrorPage = () => {
   return (
     <Container className="my-8 flex flex-col items-center gap-y-6">
       <Image src="/error404.png" alt="Error 404" fluid className="rounded-lg" />
-      <Button variant="filled" color="white" size="lg">
-        <Link to={"/"} className="flex items-center gap-2">
+      <Link to={"/"}>
+        <Button
+          variant="filled"
+          color="white"
+          size="lg"
+          className="flex items-center gap-2"
+        >
           <HomeIcon className="size-5" />
           <span>Ir a inicio</span>
-        </Link>
-      </Button>
+        </Button>
+      </Link>
     </Container>
   );
 };
