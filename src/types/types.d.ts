@@ -33,9 +33,27 @@ interface CreateUserValues {
   fullName: string;
   password: string;
   repeatPassword: string;
+  id_role?: number;
 }
 
 interface LoginUserValues {
   email: string;
   password: string;
+}
+interface ErrorMessage {
+  statusCode: number;
+  message: string;
+}
+
+interface UserResponse {
+  email: string;
+  fullName: string;
+  password: string;
+  role: string;
+}
+
+interface CreateUserResponse {
+  statusCode: number;
+  message: string;
+  user: UserResponse;
 }

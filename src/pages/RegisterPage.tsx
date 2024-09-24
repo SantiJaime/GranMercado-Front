@@ -11,11 +11,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { errorRegisterSchema } from "../utils/validationSchemas";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HIDE_PASSWORD_ICON_CLASSES } from "../constants/classes";
 import { toast } from "sonner";
+import { createNewUser } from "../helpers/usersQueries";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState({
     password: false,
     repeatPassword: false,
@@ -61,7 +63,14 @@ const RegisterPage = () => {
       toast.error("Las contraseñas no coinciden");
       return;
     }
-    console.log(values);
+    createNewUser(values)
+      .then((res) => {
+        toast.success(res.message, {
+          description: "Ya puedes iniciar sesión",
+        });
+        navigate("/iniciar-sesion");
+      })
+      .catch((error) => toast.error(error.message));
   };
 
   return (

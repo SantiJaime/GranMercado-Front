@@ -1,3 +1,4 @@
+export const URL = import.meta.env.VITE_BACK_URL_LOCAL;
 export const CAROUSEL_IMAGES1 = [
   "/sliders/slider1.webp",
   "/sliders/slider2.webp",
