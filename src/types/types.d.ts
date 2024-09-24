@@ -36,16 +36,12 @@ interface CreateUserValues {
   id_role?: number;
 }
 
-interface LoginUserValues {
-  email: string;
-  password: string;
-}
 interface ErrorMessage {
-  statusCode: number;
-  message: string;
+  msg: string;
 }
 
 interface UserResponse {
+  id: number;
   email: string;
   fullName: string;
   password: string;
@@ -53,7 +49,19 @@ interface UserResponse {
 }
 
 interface CreateUserResponse {
-  statusCode: number;
-  message: string;
-  user: UserResponse;
+  msg: string;
+  newUser: Pick<UserResponse, "email" | "password" | "role">;
+}
+
+type UserLogin = Pick<UserResponse, "email" | "password">;
+
+interface UserLoginResponse {
+  msg: string;
+  userData: Pick<UserResponse, "email" | "id" | "role">;
+  token: string;
+}
+
+interface AuthResponse {
+  msg: string;
+  isTokenVerified: boolean;
 }

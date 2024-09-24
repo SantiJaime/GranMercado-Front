@@ -6,10 +6,13 @@ import { EmailIcon } from "../components/Icons";
 import { EyeIcon, EyeSlashIcon, KeyIcon } from "@heroicons/react/24/outline";
 import { errorLoginSchema } from "../utils/validationSchemas";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HIDE_PASSWORD_ICON_CLASSES } from "../constants/classes";
+import { loginUser } from "../helpers/usersQueries";
+import { toast } from "sonner";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const button = (
@@ -25,8 +28,24 @@ const LoginPage = () => {
     </IconButton>
   );
 
-  const loginUser = (values: LoginUserValues) => {
-    console.log(values);
+  const userLogin = (values: UserLogin) => {
+    loginUser(values)
+      .then((res) => {
+        toast.success(res.msg);
+
+        sessionStorage.setItem("token", res.token);
+        sessionStorage.setItem("id", JSON.stringify(res.userData.id));
+        sessionStorage.setItem("role", res.userData.role);
+
+        res.userData.role === "Administrador"
+          ? navigate("/panel-administrador")
+          : navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message, {
+          description: "Revisa tus datos ingresados",
+        });
+      });
   };
 
   return (
@@ -36,7 +55,7 @@ const LoginPage = () => {
           email: "",
           password: "",
         }}
-        onSubmit={(values) => loginUser(values)}
+        onSubmit={(values) => userLogin(values)}
         validationSchema={errorLoginSchema}
       >
         {({ values, errors, touched, handleChange, handleSubmit }) => (
@@ -74,7 +93,12 @@ const LoginPage = () => {
               showPassButton={button}
             />
             <div className="flex justify-end">
-              <Button variant="gradient" type="submit" color="light-blue" size="sm">
+              <Button
+                variant="gradient"
+                type="submit"
+                color="light-blue"
+                size="sm"
+              >
                 Iniciar sesión
               </Button>
             </div>

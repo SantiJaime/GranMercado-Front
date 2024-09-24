@@ -65,7 +65,7 @@ const RegisterPage = () => {
     }
     createNewUser(values)
       .then((res) => {
-        toast.success(res.message, {
+        toast.success(res.msg, {
           description: "Ya puedes iniciar sesión",
         });
         navigate("/iniciar-sesion");
