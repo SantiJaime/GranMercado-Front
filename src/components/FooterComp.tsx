@@ -10,7 +10,7 @@ const FooterComp = () => {
         <Link to={"/"} className="link-container">
           <Image
             src="/LogoGranMercado.png"
-            alt="GranMercado Logo"
+            alt="Gran Mercado Logo"
             width={300}
             fluid
           />
@@ -36,8 +36,8 @@ const FooterComp = () => {
           </li>
         </ul>
       </div>
-      <hr className="my-6 border-blue-gray-50" />
-      <Typography color="white" className="text-center font-normal">
+      <hr className="my-6" />
+      <Typography className="text-center font-normal">
         &copy; 2024 El Gran Mercado
       </Typography>
     </footer>

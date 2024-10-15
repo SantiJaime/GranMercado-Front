@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Navbar, Button, IconButton, Collapse } from "@material-tailwind/react";
 import {
+  ArrowRightStartOnRectangleIcon,
   Bars3Icon,
+  Cog8ToothIcon,
   HomeIcon,
   PhoneIcon,
   ShoppingBagIcon,
-  ShoppingCartIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Image } from "react-bootstrap";
+import CartComp from "./CartComp";
 
 const NAVIGATION = [
   {
@@ -28,9 +30,48 @@ const NAVIGATION = [
     icon: <PhoneIcon className="size-5" />,
   },
 ];
-
+const NAVIGATION_ADMIN = [
+  {
+    name: "Inicio",
+    href: "/",
+    icon: <HomeIcon className="size-5" />,
+  },
+  {
+    name: "Productos",
+    href: "/productos",
+    icon: <ShoppingBagIcon className="size-5" />,
+  },
+];
 const NavbarComp = () => {
+  const navigate = useNavigate();
+
+  const [userInfo, setUserInfo] = useState({
+    token: sessionStorage.getItem("token")
+      ? JSON.parse(sessionStorage.getItem("token") as string)
+      : "",
+    role: sessionStorage.getItem("role")
+      ? JSON.parse(sessionStorage.getItem("role") as string)
+      : "",
+  });
+
   const [openNav, setOpenNav] = useState(false);
+
+  const token = sessionStorage.getItem("token")
+    ? JSON.parse(sessionStorage.getItem("token") as string)
+    : "";
+  const role = sessionStorage.getItem("role")
+    ? JSON.parse(sessionStorage.getItem("role") as string)
+    : "";
+
+  useEffect(() => {
+    setUserInfo({ token, role });
+  }, [token, role]);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("role");
+    navigate("/");
+  };
 
   useEffect(() => {
     window.addEventListener(
@@ -40,25 +81,30 @@ const NavbarComp = () => {
   }, []);
 
   const navList = (
-    <div className="mb-4 mt-2 flex flex-col gap-6 lg:my-0 lg:flex-row lg:items-center">
-      {NAVIGATION.map((item) => (
-        <Link
-          to={item.href}
-          key={item.name}
-          className="flex items-center gap-1 text-gray-900 transition hover:text-blue-600"
-        >
-          {item.icon}
-          <span>{item.name}</span>
-        </Link>
-      ))}
-      <button
-        className="flex items-center gap-1 transition hover:text-blue-600"
-        type="button"
-        aria-label="Ver carrito de compras"
-      >
-        <ShoppingCartIcon className="size-5" />
-        <span>Carrito</span>
-      </button>
+    <div className="my-4 flex flex-col gap-6 lg:flex-row lg:items-center">
+      {userInfo.token && userInfo.role === "Administrador"
+        ? NAVIGATION_ADMIN.map((item) => (
+            <Link
+              to={item.href}
+              key={item.name}
+              className="flex items-center gap-1 text-gray-900 transition hover:text-blue-600"
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </Link>
+          ))
+        : NAVIGATION.map((item) => (
+            <Link
+              to={item.href}
+              key={item.name}
+              className="flex items-center gap-1 text-gray-900 transition hover:text-blue-600"
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </Link>
+          ))}
+
+      <CartComp />
     </div>
   );
 
@@ -68,13 +114,13 @@ const NavbarComp = () => {
         <Link to={"/"}>
           <Image
             src="/LogoGranMercado.png"
-            alt="Logo - El gran mercado"
+            alt="Logo - El Gran Mercado"
             width={200}
             fluid
           />
         </Link>
         <div className="flex items-center gap-4">
-          <div className="mr-4 hidden lg:block">{navList}</div>
+          <div className="hidden lg:block">{navList}</div>
           <IconButton
             variant="text"
             className="text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -89,23 +135,101 @@ const NavbarComp = () => {
           </IconButton>
         </div>
         <div className="divNavbar">
-          <Button variant="text" size="sm">
-            Iniciar sesión
-          </Button>
-          <Button variant="gradient" size="sm">
-            Registrarse
-          </Button>
+          {userInfo.token && userInfo.role === "Administrador" ? (
+            <>
+              <Link
+                to={"/panel-administrador"}
+                className="flex items-center gap-1 rounded-lg p-1 text-gray-900 transition hover:text-blue-600"
+              >
+                <Cog8ToothIcon className="size-5" />
+                <span>Panel de administrador</span>
+              </Link>
+              <button
+                className="flex items-center gap-1 rounded-lg p-1 hover:bg-blue-gray-200/30"
+                type="button"
+                aria-label="Cerrar sesión"
+                onClick={handleLogout}
+              >
+                <ArrowRightStartOnRectangleIcon className="size-5 text-gray-900" />
+                <span>Cerrar sesión</span>
+              </button>
+            </>
+          ) : userInfo.token && userInfo.role === "Usuario" ? (
+            <>
+              <button
+                className="flex items-center gap-1 rounded-lg p-1 hover:bg-blue-gray-200/30"
+                type="button"
+                aria-label="Cerrar sesión"
+                onClick={handleLogout}
+              >
+                <ArrowRightStartOnRectangleIcon className="size-5 text-gray-900" />
+                <span>Cerrar sesión</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to={"/iniciar-sesion"}>
+                <Button variant="text" size="sm">
+                  Iniciar sesión
+                </Button>
+              </Link>
+              <Link to={"/registrarse"}>
+                <Button variant="gradient" size="sm">
+                  Registrarse
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
       <Collapse open={openNav}>
         {navList}
         <div className="flex items-center gap-x-1">
-          <Button fullWidth variant="text" size="sm" className="">
-            <span>Iniciar sesión</span>
-          </Button>
-          <Button fullWidth variant="gradient" size="sm" className="">
-            <span>Registrarse</span>
-          </Button>
+          {userInfo.token && userInfo.role === "Administrador" ? (
+            <>
+              <Link
+                to={"/panel-administrador"}
+                className="flex items-center gap-1 rounded-lg p-1 text-gray-900 transition hover:text-blue-600"
+              >
+                <Cog8ToothIcon className="size-5" />
+                <span>Panel de administrador</span>
+              </Link>
+              <button
+                className="flex items-center gap-1 rounded-lg p-1 hover:bg-blue-gray-200/30"
+                type="button"
+                aria-label="Cerrar sesión"
+                onClick={handleLogout}
+              >
+                <ArrowRightStartOnRectangleIcon className="size-5 text-gray-900" />
+                <span>Cerrar sesión</span>
+              </button>
+            </>
+          ) : userInfo.token && userInfo.role === "Usuario" ? (
+            <>
+              <button
+                className="flex items-center gap-1 rounded-lg p-1 hover:bg-blue-gray-200/30"
+                type="button"
+                aria-label="Cerrar sesión"
+                onClick={handleLogout}
+              >
+                <ArrowRightStartOnRectangleIcon className="size-5 text-gray-900" />
+                <span>Cerrar sesión</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to={"/iniciar-sesion"} className="w-full">
+                <Button fullWidth variant="text" size="sm">
+                  Iniciar sesión
+                </Button>
+              </Link>
+              <Link to={"/registrarse"} className="w-full">
+                <Button fullWidth variant="gradient" size="sm">
+                  Registrarse
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </Collapse>
     </Navbar>

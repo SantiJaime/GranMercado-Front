@@ -1,0 +1,78 @@
+{
+  "popularProducts": [
+    {
+      "id": 6,
+      "title": "Calvin Klein CK One",
+      "price": 49.99,
+      "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/thumbnail.png",
+      "images": [
+        "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/1.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/2.png",
+        "https://cdn.dummyjson.com/products/images/fragrances/Calvin%20Klein%20CK%20One/3.png"
+      ],
+      "description": "CK One by Calvin Klein is a classic unisex fragrance, known for its fresh and clean scent. It's a versatile fragrance suitable for everyday wear.",
+      "category": "fragrances"
+    },
+    {
+      "id": 34,
+      "title": "Nescafe Coffee",
+      "price": 7.99,
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Nescafe%20Coffee/thumbnail.png",
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Nescafe%20Coffee/1.png"
+      ],
+      "description": "Quality coffee from Nescafe, available in various blends for a rich and satisfying cup.",
+      "category": "groceries"
+    },
+    {
+      "id": 36,
+      "title": "Protein Powder",
+      "price": 19.99,
+      "thumbnail": "https://cdn.dummyjson.com/products/images/groceries/Protein%20Powder/thumbnail.png",
+      "images": [
+        "https://cdn.dummyjson.com/products/images/groceries/Protein%20Powder/1.png"
+      ],
+      "description": "Nutrient-packed protein powder, ideal for supplementing your diet with essential proteins.",
+      "category": "groceries"
+    },
+    {
+      "id": 49,
+      "title": "Black Aluminium Cup",
+      "price": 5.99,
+      "thumbnail": "https://cdn.dummyjson.com/products/images/kitchen-accessories/Black%20Aluminium%20Cup/thumbnail.png",
+      "images": [
+        "https://cdn.dummyjson.com/products/images/kitchen-accessories/Black%20Aluminium%20Cup/1.png",
+        "https://cdn.dummyjson.com/products/images/kitchen-accessories/Black%20Aluminium%20Cup/2.png"
+      ],
+      "description": "The Black Aluminium Cup is a stylish and durable cup suitable for both hot and cold beverages. Its sleek black design adds a modern touch to your drinkware collection.",
+      "category": "kitchen-accessories"
+    },
+    {
+      "id": 78,
+      "title": "Apple MacBook Pro 14 Inch Space Grey",
+      "price": 1999.99,
+      "thumbnail": "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/thumbnail.png",
+      "images": [
+        "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/1.png",
+        "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/2.png",
+        "https://cdn.dummyjson.com/products/images/laptops/Apple%20MacBook%20Pro%2014%20Inch%20Space%20Grey/3.png"
+      ],
+      "description": "The MacBook Pro 14 Inch in Space Grey is a powerful and sleek laptop, featuring Apple's M1 Pro chip for exceptional performance and a stunning Retina display.",
+      "category": "laptops"
+    },
+    {
+      "id": 88,
+      "title": "Nike Air Jordan 1 Red And Black",
+      "price": 149.99,
+      "thumbnail": "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/thumbnail.png",
+      "images": [
+        "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/1.png",
+        "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/2.png",
+        "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/3.png",
+        "https://cdn.dummyjson.com/products/images/mens-shoes/Nike%20Air%20Jordan%201%20Red%20And%20Black/4.png"
+      ],
+      "description": "The Nike Air Jordan 1 in Red and Black is an iconic basketball sneaker known for its stylish design and high-performance features, making it a favorite among sneaker enthusiasts and athletes.",
+      "category": "mens-shoes"
+    }
+  ]
+}
