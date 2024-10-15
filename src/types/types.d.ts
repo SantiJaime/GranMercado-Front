@@ -26,7 +26,7 @@ interface InputAndSelect {
   touched?: boolean;
 }
 
-type InputType = "text" | "email" | "password" | "textarea" | "date" | "number";
+type InputType = "text" | "email" | "password" | "textarea" | "date" | "number" | "search";
 
 interface CreateUserValues {
   email: string;
@@ -64,4 +64,11 @@ interface UserLoginResponse {
 interface AuthResponse {
   msg: string;
   isTokenVerified: boolean;
+}
+
+type TabType = "products" | "users";
+
+interface GetAllUsersResponse {
+  msg: string;
+  allUsers: Pick<UserResponse, "email" | "fullName" | "id" | "role">[];
 }

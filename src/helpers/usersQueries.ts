@@ -1,5 +1,21 @@
 import { URL } from "../constants/const";
 
+export const getAllUsers = async () => {
+  try {
+    const response = await fetch(`${URL}/users`);
+    if(!response.ok){
+      const errorResponse: ErrorMessage = await response.json();
+      throw new Error(errorResponse.msg);
+    }
+    const res: GetAllUsersResponse = await response.json();
+    return res;
+  } catch (error) {
+    if (error instanceof Error) throw error;
+
+    throw new Error("Error desconocido");
+  }
+};
+
 export const createNewUser = async (userData: CreateUserValues) => {
   try {
     const response = await fetch(`${URL}/users`, {
