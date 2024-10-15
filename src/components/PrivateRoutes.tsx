@@ -22,7 +22,7 @@ const PrivateRoutes: React.FC<Props> = ({ children }) => {
     }
 
     try {
-      const res = await checkAuth(token);
+      const res = await checkAuth(JSON.parse(token));
       if (res.isTokenVerified) setIsAuth(true);
     } catch (error) {
       if (error instanceof Error) {

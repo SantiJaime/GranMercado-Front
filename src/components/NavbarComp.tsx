@@ -46,13 +46,22 @@ const NavbarComp = () => {
   const navigate = useNavigate();
 
   const [userInfo, setUserInfo] = useState({
-    token: sessionStorage.getItem("token") || "",
-    role: sessionStorage.getItem("role") || "",
+    token: sessionStorage.getItem("token")
+      ? JSON.parse(sessionStorage.getItem("token") as string)
+      : "",
+    role: sessionStorage.getItem("role")
+      ? JSON.parse(sessionStorage.getItem("role") as string)
+      : "",
   });
+
   const [openNav, setOpenNav] = useState(false);
 
-  const token = sessionStorage.getItem("token") || "";
-  const role = sessionStorage.getItem("role") || "";
+  const token = sessionStorage.getItem("token")
+    ? JSON.parse(sessionStorage.getItem("token") as string)
+    : "";
+  const role = sessionStorage.getItem("role")
+    ? JSON.parse(sessionStorage.getItem("role") as string)
+    : "";
 
   useEffect(() => {
     setUserInfo({ token, role });

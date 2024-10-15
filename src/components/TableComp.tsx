@@ -6,11 +6,17 @@ import {
   CardBody,
   CardFooter,
   Avatar,
+  Tooltip,
+  IconButton,
 } from "@material-tailwind/react";
 import { useState } from "react";
 import PaginationComp from "./PaginationComp";
 import FilterComp from "./FilterComp";
 import useFilters from "../hooks/useFilters";
+import useUsers from "../hooks/useUsers";
+import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { deleteUser } from "../helpers/usersQueries";
+import { toast } from "sonner";
 
 interface Props {
   type: TabType;
@@ -19,6 +25,7 @@ interface Props {
 const TableComp: React.FC<Props> = ({ type }) => {
   const [products] = useState(initialProducts);
   const { filterProducts } = useFilters();
+  const { users, setUsers } = useUsers();
 
   const [productsPerPage] = useState(24);
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +35,28 @@ const TableComp: React.FC<Props> = ({ type }) => {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
-  const TABLE_HEAD = ["Producto", "Precio", "Descripción", "Categoría"];
+  const TABLE_HEAD_PRODUCTS = [
+    "Producto",
+    "Precio",
+    "Descripción",
+    "Categoría",
+  ];
+  const TABLE_HEAD_USERS = [
+    "Correo electrónico",
+    "Nombre completo",
+    "Rol de usuario",
+    "Editar",
+    "Eliminar",
+  ];
+
+  const handleDeleteUser = (id: number) => {
+    deleteUser(id)
+      .then((res) => {
+        toast.success(res.msg);
+        setUsers((users) => users.filter((user) => user.id !== id));
+      })
+      .catch((err) => toast.error(err.message));
+  };
 
   return (
     <>
@@ -55,7 +83,7 @@ const TableComp: React.FC<Props> = ({ type }) => {
             <table className="w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
-                  {TABLE_HEAD.map((head) => (
+                  {TABLE_HEAD_PRODUCTS.map((head) => (
                     <th
                       key={head}
                       className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
@@ -147,7 +175,114 @@ const TableComp: React.FC<Props> = ({ type }) => {
           </CardFooter>
         </Card>
       ) : (
-        <p>ORDERS</p>
+        <Card className="size-full">
+          <CardHeader floated={false} shadow={false} className="rounded-none">
+            <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
+              <div>
+                <Typography variant="h5" color="blue-gray">
+                  Usuarios
+                </Typography>
+                <Typography color="gray" className="mt-1 font-normal">
+                  Todos los usuarios registrados en la página de El Gran Mercado
+                </Typography>
+              </div>
+            </div>
+          </CardHeader>
+          <CardBody className="overflow-scroll px-0">
+            <table className="w-full min-w-max table-auto text-left">
+              <thead>
+                <tr>
+                  {TABLE_HEAD_USERS.map((head) => (
+                    <th
+                      key={head}
+                      className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                    >
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal leading-none opacity-70"
+                      >
+                        {head}
+                      </Typography>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {users.map(({ email, fullName, role, id }, index) => {
+                  const isLast = index === users.length - 1;
+                  const classes = isLast
+                    ? "p-4"
+                    : "p-4 border-b border-blue-gray-50";
+
+                  return (
+                    <tr key={id}>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-bold"
+                        >
+                          {email}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {fullName}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Typography
+                          variant="small"
+                          color="blue-gray"
+                          className="font-normal"
+                        >
+                          {role}
+                        </Typography>
+                      </td>
+                      <td className={classes}>
+                        <Tooltip
+                          content="Editar usuario"
+                          className="bg-gray-100 text-gray-900"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <IconButton variant="filled" color="light-blue">
+                            <PencilIcon className="size-5" />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
+                      <td className={classes}>
+                        <Tooltip
+                          content="Eliminar usuario"
+                          className="bg-gray-100 text-gray-900"
+                          animate={{
+                            mount: { scale: 1, y: 0 },
+                            unmount: { scale: 0, y: 25 },
+                          }}
+                        >
+                          <IconButton
+                            variant="filled"
+                            color="red"
+                            onClick={() => handleDeleteUser(id)}
+                          >
+                            <TrashIcon className="size-5" />
+                          </IconButton>
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </CardBody>
+        </Card>
       )}
     </>
   );

@@ -33,9 +33,9 @@ const LoginPage = () => {
       .then((res) => {
         toast.success(res.msg);
 
-        sessionStorage.setItem("token", res.token);
+        sessionStorage.setItem("token", JSON.stringify(res.token));
         sessionStorage.setItem("id", JSON.stringify(res.userData.id));
-        sessionStorage.setItem("role", res.userData.role);
+        sessionStorage.setItem("role", JSON.stringify(res.userData.role));
 
         res.userData.role === "Administrador"
           ? navigate("/panel-administrador")

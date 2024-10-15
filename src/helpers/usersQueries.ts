@@ -1,9 +1,22 @@
+import Swal from "sweetalert2";
 import { URL } from "../constants/const";
 
 export const getAllUsers = async () => {
+  const token = sessionStorage.getItem("token");
+  if (!token) {
+    throw new Error(
+      "No tienes los permisos necesarios para realizar esta acción"
+    );
+  }
   try {
-    const response = await fetch(`${URL}/users`);
-    if(!response.ok){
+    const response = await fetch(`${URL}/users`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    });
+    if (!response.ok) {
       const errorResponse: ErrorMessage = await response.json();
       throw new Error(errorResponse.msg);
     }
@@ -88,6 +101,51 @@ export const checkAuth = async (token: string) => {
   } catch (error) {
     if (error instanceof Error) throw error;
 
+    throw new Error("Error desconocido");
+  }
+};
+
+export const deleteUser = async (id: number) => {
+  const token = sessionStorage.getItem("token");
+  if (!token) {
+    throw new Error(
+      "No tienes los permisos necesarios para realizar esta acción"
+    );
+  }
+
+  const result = await Swal.fire({
+    title: "¿Estás seguro de eliminar este usuario?",
+    text: "Esta acción no se puede deshacer",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, eliminar",
+    cancelButtonText: "Cancelar",
+  });
+
+  if (!result.isConfirmed) throw new Error("Acción cancelada por el usuario");
+
+  try {
+    const response = await fetch(`${URL}/users/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorResponse: ErrorMessage = await response.json();
+      throw new Error(errorResponse.msg);
+    }
+
+    const res: { msg: string } = await response.json();
+    return res;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
     throw new Error("Error desconocido");
   }
 };
