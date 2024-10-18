@@ -10,7 +10,7 @@ import React from "react";
 import { Col } from "react-bootstrap";
 // import { type Product } from "../types/types";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import ProductView from "./ProductView";
+import OneProductView from "./OneProductView";
 
 interface Props {
   product: Product;
@@ -46,7 +46,7 @@ const CardComp: React.FC<Props> = ({ product }) => {
             <ShoppingCartIcon className="size-5" />
             <span>Añadir al carrito</span>
           </Button>
-          <ProductView product={product} />
+          <OneProductView product={product} />
         </CardFooter>
       </Card>
     </Col>

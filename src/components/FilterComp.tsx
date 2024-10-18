@@ -9,7 +9,7 @@ import {
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { FILTER_MENU_OPTIONS } from "../constants/const";
 import useFilters from "../hooks/useFilters";
-import { RangeInput } from "./InputComp";
+import { RangeSlider } from "flowbite-react";
 
 interface Props {
   type: "Category" | "Price";
@@ -62,12 +62,13 @@ const FilterComp: React.FC<Props> = ({ type }) => {
           <div className="w-80">
             <Typography variant="h6">Precio a partir de:</Typography>
             <div className="flex items-center gap-1">
-              <RangeInput
+              <RangeSlider
                 id="price-range-filter"
                 value={Number(filters.minPrice)}
                 onChange={handleChangePrice}
                 min={0}
                 max={15000}
+                sizing="md"
               />
               <Typography variant="h6">
                 ${Math.round(filters.minPrice)}
