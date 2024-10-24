@@ -20,7 +20,7 @@ interface InputAndSelect {
   id: string;
   name: string;
   label: string;
-  value: string | number;
+  value?: string | number;
   icon: JSX.Element;
   errors?: string;
   touched?: boolean;

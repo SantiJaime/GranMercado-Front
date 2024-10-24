@@ -19,9 +19,9 @@ const HomePage = () => {
   const [popularProducts] = useState(initialPopularProducts);
   const [userRole, setUserRole] = useState("");
 
-  const role = JSON.parse(sessionStorage.getItem("role") || "");
+  const role = sessionStorage.getItem("role");
   useEffect(() => {
-    setUserRole(role);
+    setUserRole(JSON.parse(role as string));
   }, [role]);
   return (
     <>
@@ -71,7 +71,7 @@ const HomePage = () => {
                         <span>Añadir al carrito</span>
                       </Button>
                     )}
-                    <OneProductView product={product} role={userRole}/>
+                    <OneProductView product={product} role={userRole} />
                   </CardFooter>
                 </Card>
               </Col>

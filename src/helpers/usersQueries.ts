@@ -105,6 +105,62 @@ export const checkAuth = async (token: string) => {
   }
 };
 
+export const updateUserFullName = async (fullName: string, id: number) => {
+  const token = sessionStorage.getItem("token");
+  if (!token) {
+    throw new Error(
+      "No tienes los permisos necesarios para realizar esta acción"
+    );
+  }
+  try {
+    const response = await fetch(`${URL}/users/updateName/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: JSON.stringify({ fullName }),
+    });
+    if (!response.ok) {
+      const errorResponse: ErrorMessage = await response.json();
+      throw new Error(errorResponse.msg);
+    }
+    const res: { msg: string } = await response.json();
+    return res;
+  } catch (error) {
+    if(error instanceof Error) throw error;
+    throw new Error("Error desconocido");
+  }
+};
+
+export const updateUserRole = async (id_role: number, id: number) => {
+  const token = sessionStorage.getItem("token");
+  if (!token) {
+    throw new Error(
+      "No tienes los permisos necesarios para realizar esta acción"
+    );
+  }
+  try {
+    const response = await fetch(`${URL}/users/updateRole/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+      body: JSON.stringify({ id_role }),
+    });
+    if (!response.ok) {
+      const errorResponse: ErrorMessage = await response.json();
+      throw new Error(errorResponse.msg);
+    }
+    const res: { msg: string } = await response.json();
+    return res;
+  } catch (error) {
+    if(error instanceof Error) throw error;
+    throw new Error("Error desconocido");
+  }
+};
+
 export const deleteUser = async (id: number) => {
   const token = sessionStorage.getItem("token");
   if (!token) {

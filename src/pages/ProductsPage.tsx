@@ -19,9 +19,9 @@ const ProductsPage = () => {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
 
-  const role = JSON.parse(sessionStorage.getItem("role") || "");
+  const role = sessionStorage.getItem("role");
   useEffect(() => {
-    setUserRole(role);
+    setUserRole(JSON.parse(role as string));
   }, [role]);
 
   return (

@@ -11,7 +11,7 @@ interface Props extends InputAndSelect {
   showPassButton?: JSX.Element;
   showRepeatPassButton?: JSX.Element;
   onChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
 }
 
