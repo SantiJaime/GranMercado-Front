@@ -1,6 +1,6 @@
 import { Container, Row } from "react-bootstrap";
 import { products as initialProducts } from "../mocks/products.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardComp from "../components/CardComp";
 import { Typography } from "@material-tailwind/react";
 import PaginationComp from "../components/PaginationComp";
@@ -12,11 +12,17 @@ const ProductsPage = () => {
   const { filterProducts } = useFilters();
   const [productsPerPage] = useState(24);
   const [currentPage, setCurrentPage] = useState(1);
+  const [userRole, setUserRole] = useState("");
 
   const filteredProducts = filterProducts(products);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+
+  const role = JSON.parse(sessionStorage.getItem("role") || "");
+  useEffect(() => {
+    setUserRole(role);
+  }, [role]);
 
   return (
     <>
@@ -30,7 +36,9 @@ const ProductsPage = () => {
         <hr />
         <Row>
           {filteredProducts
-            .map((product) => <CardComp product={product} key={product.id} />)
+            .map((product) => (
+              <CardComp product={product} key={product.id} role={userRole} />
+            ))
             .slice(indexOfFirstProduct, indexOfLastProduct)}
         </Row>
         {filteredProducts.length === 0 ? (

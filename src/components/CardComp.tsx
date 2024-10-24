@@ -8,15 +8,15 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 import { Col } from "react-bootstrap";
-// import { type Product } from "../types/types";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 import OneProductView from "./OneProductView";
 
 interface Props {
   product: Product;
+  role: string
 }
 
-const CardComp: React.FC<Props> = ({ product }) => {
+const CardComp: React.FC<Props> = ({ product, role }) => {
   return (
     <Col lg={3} md={6} sm={12} className="my-4 flex justify-center">
       <Card className="flex flex-col justify-between">
@@ -38,15 +38,17 @@ const CardComp: React.FC<Props> = ({ product }) => {
           </CardBody>
         </div>
         <CardFooter className="flex flex-col gap-y-2 pt-0">
-          <Button
-            fullWidth={true}
-            variant="gradient"
-            className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-          >
-            <ShoppingCartIcon className="size-5" />
-            <span>Añadir al carrito</span>
-          </Button>
-          <OneProductView product={product} />
+          {role !== "Administrador" && (
+            <Button
+              fullWidth={true}
+              variant="gradient"
+              className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+            >
+              <ShoppingCartIcon className="size-5" />
+              <span>Añadir al carrito</span>
+            </Button>
+          )}
+          <OneProductView product={product} role={role}/>
         </CardFooter>
       </Card>
     </Col>

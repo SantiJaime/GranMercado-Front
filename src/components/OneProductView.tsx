@@ -10,9 +10,10 @@ import Modal from "react-bootstrap/Modal";
 
 interface Props {
   product: Product;
+  role: string;
 }
 
-const OneProductView: React.FC<Props> = ({ product }) => {
+const OneProductView: React.FC<Props> = ({ product, role }) => {
   const [show, setShow] = useState(false);
   const [activeImage, setActiveImage] = useState(product.thumbnail);
 
@@ -43,13 +44,13 @@ const OneProductView: React.FC<Props> = ({ product }) => {
             <Row>
               {window.innerWidth < 577 && (
                 <Col sm={12} className="flex justify-end">
-                <Button
-                  variant="text"
-                  className="h-min p-2 transition-all hover:bg-gray-400/50"
-                  onClick={handleClose}
-                >
-                  <XMarkIcon className="size-5 text-gray-900" />
-                </Button>
+                  <Button
+                    variant="text"
+                    className="h-min p-2 transition-all hover:bg-gray-400/50"
+                    onClick={handleClose}
+                  >
+                    <XMarkIcon className="size-5 text-gray-900" />
+                  </Button>
                 </Col>
               )}
               <Col sm={5}>
@@ -102,16 +103,18 @@ const OneProductView: React.FC<Props> = ({ product }) => {
                       {product.description}
                     </Typography>
                   </Col>
-                  <Col sm={12}>
-                    <Button
-                      fullWidth={true}
-                      variant="gradient"
-                      className="mt-8 flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    >
-                      <ShoppingCartIcon className="size-5" />
-                      <span>Añadir al carrito</span>
-                    </Button>
-                  </Col>
+                  {role !== "Administrador" && (
+                    <Col sm={12}>
+                      <Button
+                        fullWidth={true}
+                        variant="gradient"
+                        className="mt-8 flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      >
+                        <ShoppingCartIcon className="size-5" />
+                        <span>Añadir al carrito</span>
+                      </Button>
+                    </Col>
+                  )}
                 </Row>
               </Col>
             </Row>

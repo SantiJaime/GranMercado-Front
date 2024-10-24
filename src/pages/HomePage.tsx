@@ -9,7 +9,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import CarouselComp from "../components/CarouselComp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CAROUSEL_IMAGES1, CAROUSEL_IMAGES2 } from "../constants/const";
 import ExplorerComp from "../components/ExplorerComp";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
@@ -17,7 +17,12 @@ import OneProductView from "../components/OneProductView";
 
 const HomePage = () => {
   const [popularProducts] = useState(initialPopularProducts);
+  const [userRole, setUserRole] = useState("");
 
+  const role = JSON.parse(sessionStorage.getItem("role") || "");
+  useEffect(() => {
+    setUserRole(role);
+  }, [role]);
   return (
     <>
       {window.innerWidth >= 960 ? (
@@ -56,15 +61,17 @@ const HomePage = () => {
                     </CardBody>
                   </div>
                   <CardFooter className="flex flex-col gap-y-2 pt-0">
-                    <Button
-                      fullWidth={true}
-                      variant="gradient"
-                      className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    >
-                      <ShoppingCartIcon className="size-5" />
-                      <span>Añadir al carrito</span>
-                    </Button>
-                    <OneProductView product={product} />
+                    {userRole !== "Administrador" && (
+                      <Button
+                        fullWidth={true}
+                        variant="gradient"
+                        className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                      >
+                        <ShoppingCartIcon className="size-5" />
+                        <span>Añadir al carrito</span>
+                      </Button>
+                    )}
+                    <OneProductView product={product} role={userRole}/>
                   </CardFooter>
                 </Card>
               </Col>

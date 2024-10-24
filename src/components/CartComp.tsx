@@ -20,7 +20,7 @@ const CartComp = () => {
         <ShoppingCartIcon className="size-5" />
         <span>Carrito</span>
       </button>
-      <Drawer open={isOpen} onClose={handleClose} position="right">
+      <Drawer open={isOpen} onClose={handleClose} position="left">
         <Drawer.Header
           title="Mi carrito"
           titleIcon={
