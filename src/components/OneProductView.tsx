@@ -7,18 +7,31 @@ import { Button, Typography } from "@material-tailwind/react";
 import { useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
+import { toast } from "sonner";
+import useCart from "../hooks/useCart";
 
 interface Props {
   product: Product;
-  role: string;
+  role?: string;
 }
 
 const OneProductView: React.FC<Props> = ({ product, role }) => {
   const [show, setShow] = useState(false);
   const [activeImage, setActiveImage] = useState(product.thumbnail);
+  const { isProdInCart, addToCart } = useCart();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+
+  const handleClickCart = (product: Product) => {
+    if (isProdInCart(product)) {
+      toast.error("El producto ya se encuentra en el carrito");
+      return;
+    }
+    addToCart(product);
+    toast.success("Producto agregado al carrito");
+  };
 
   return (
     <>
@@ -109,6 +122,7 @@ const OneProductView: React.FC<Props> = ({ product, role }) => {
                         fullWidth={true}
                         variant="gradient"
                         className="mt-8 flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                        onClick={() => handleClickCart(product)}
                       >
                         <ShoppingCartIcon className="size-5" />
                         <span>Añadir al carrito</span>

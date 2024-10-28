@@ -16,6 +16,16 @@ interface IFiltersContext {
   setFilters: React.Dispatch<React.SetStateAction<IFilters>>;
 }
 
+interface ProductsContext {
+  cartItems: ProductWithQuantity[];
+  setCartItems: React.Dispatch<React.SetStateAction<ProductWithQuantity[]>>;
+  addToCart: (product: Product) => void;
+  isProdInCart: (product: Product) => boolean;
+  removeFromCart: (id: number) => void;
+  addQuantity: (id: number) => void;
+  subtractQuantity: (id: number) => void;
+}
+
 interface InputAndSelect {
   id: string;
   name: string;
@@ -26,7 +36,14 @@ interface InputAndSelect {
   touched?: boolean;
 }
 
-type InputType = "text" | "email" | "password" | "textarea" | "date" | "number" | "search";
+type InputType =
+  | "text"
+  | "email"
+  | "password"
+  | "textarea"
+  | "date"
+  | "number"
+  | "search";
 
 interface CreateUserValues {
   email: string;
@@ -71,4 +88,8 @@ type TabType = "products" | "users";
 interface GetAllUsersResponse {
   msg: string;
   allUsers: Pick<UserResponse, "email" | "fullName" | "id" | "role">[];
+}
+
+interface ProductWithQuantity extends Product {
+  quantity: number;
 }
