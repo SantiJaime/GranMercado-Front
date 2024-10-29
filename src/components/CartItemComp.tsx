@@ -1,6 +1,5 @@
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-import { Typography } from "@material-tailwind/react";
-import { Button } from "flowbite-react";
+import { Button, IconButton, Typography } from "@material-tailwind/react";
 import React from "react";
 import { Col, Image } from "react-bootstrap";
 import { CartXIcon } from "./Icons";
@@ -29,20 +28,29 @@ const CartItemComp: React.FC<Props> = ({ product }) => {
         </Typography>
         <hr className="my-2" />
         <div className="flex items-center justify-center gap-1">
-          <button className="rounded-lg bg-red-600 p-2 text-white" onClick={() => subtractQuantity(product.id)}>
+          <IconButton
+            color="red"
+            variant="gradient"
+            onClick={() => subtractQuantity(product.id)}
+          >
             <MinusIcon className="size-4" />
-          </button>
+          </IconButton>
           <Typography color="black" variant="h6">
             {product.quantity}
           </Typography>
-          <button className="rounded-lg bg-green-600 p-2 text-white" onClick={() => addQuantity(product.id)}>
+          <IconButton
+            color="green"
+            variant="gradient"
+            onClick={() => addQuantity(product.id)}
+          >
             <PlusIcon className="size-4" />
-          </button>
+          </IconButton>
         </div>
         <div className="mt-2 flex justify-center">
           <Button
-            gradientMonochrome="failure"
-            className="gap-2"
+            variant="gradient"
+            color="cyan"
+            className="flex items-center gap-2 py-2"
             onClick={() => handleDelete(product.id)}
           >
             <CartXIcon className="size-5" />
