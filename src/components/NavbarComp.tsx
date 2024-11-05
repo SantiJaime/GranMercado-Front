@@ -103,8 +103,7 @@ const NavbarComp = () => {
               <span>{item.name}</span>
             </Link>
           ))}
-
-      <CartComp />
+      {userInfo.role !== "Administrador" && <CartComp />}
     </div>
   );
 

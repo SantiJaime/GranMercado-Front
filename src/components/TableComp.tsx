@@ -14,9 +14,10 @@ import PaginationComp from "./PaginationComp";
 import FilterComp from "./FilterComp";
 import useFilters from "../hooks/useFilters";
 import useUsers from "../hooks/useUsers";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { TrashIcon } from "@heroicons/react/24/outline";
 import { deleteUser } from "../helpers/usersQueries";
 import { toast } from "sonner";
+import EditModalComp from "./EditModalComp";
 
 interface Props {
   type: TabType;
@@ -245,18 +246,12 @@ const TableComp: React.FC<Props> = ({ type }) => {
                         </Typography>
                       </td>
                       <td className={classes}>
-                        <Tooltip
-                          content="Editar usuario"
-                          className="bg-gray-100 text-gray-900"
-                          animate={{
-                            mount: { scale: 1, y: 0 },
-                            unmount: { scale: 0, y: 25 },
-                          }}
-                        >
-                          <IconButton variant="filled" color="light-blue">
-                            <PencilIcon className="size-5" />
-                          </IconButton>
-                        </Tooltip>
+                        <EditModalComp
+                          role={role}
+                          fullName={fullName}
+                          id={id}
+                          setUsers={setUsers}
+                        />
                       </td>
                       <td className={classes}>
                         <Tooltip

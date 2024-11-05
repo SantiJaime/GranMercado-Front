@@ -3,18 +3,21 @@ import RoutesView from "./routes/RoutesView";
 import { Toaster } from "sonner";
 import NavbarComp from "./components/NavbarComp";
 import FooterComp from "./components/FooterComp";
+import { CartProvider } from "./context/Cart";
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <NavbarComp />
-        <main>
-          <Toaster richColors />
-          <RoutesView />
-        </main>
-        <FooterComp />
-      </div>
-    </BrowserRouter>
+    <CartProvider>
+      <BrowserRouter>
+        <div className="App">
+          <NavbarComp />
+          <main>
+            <Toaster richColors />
+            <RoutesView />
+          </main>
+          <FooterComp />
+        </div>
+      </BrowserRouter>
+    </CartProvider>
   );
 };
 

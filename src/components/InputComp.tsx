@@ -11,34 +11,10 @@ interface Props extends InputAndSelect {
   showPassButton?: JSX.Element;
   showRepeatPassButton?: JSX.Element;
   onChange: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
 }
-interface RangeProps extends Partial<InputAndSelect> {
-  min: number;
-  max: number;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
 
-export const RangeInput: React.FC<RangeProps> = ({
-  id,
-  value,
-  onChange,
-  min,
-  max,
-}) => {
-  return (
-    <input
-      id={id}
-      type="range"
-      value={value}
-      onChange={onChange}
-      min={min}
-      max={max}
-      className="w-full rounded-lg bg-gray-300"
-    />
-  );
-};
 export const InputComp: React.FC<Props> = ({
   name,
   type,

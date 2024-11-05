@@ -9,16 +9,33 @@ import {
   Button,
 } from "@material-tailwind/react";
 import CarouselComp from "../components/CarouselComp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CAROUSEL_IMAGES1, CAROUSEL_IMAGES2 } from "../constants/const";
 import ExplorerComp from "../components/ExplorerComp";
-import {
-  ArrowLongRightIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/outline";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import OneProductView from "../components/OneProductView";
+import { toast } from "sonner";
+import useCart from "../hooks/useCart";
 
 const HomePage = () => {
   const [popularProducts] = useState(initialPopularProducts);
+  const [userRole, setUserRole] = useState("");
+  const { addToCart, isProdInCart } = useCart();
+
+  const role = sessionStorage.getItem("role");
+
+  useEffect(() => {
+    setUserRole(JSON.parse(role as string));
+  }, [role]);
+
+  const handleClickCart = (product: Product) => {
+    if (isProdInCart(product)) {
+      toast.error("El producto ya se encuentra en el carrito");
+      return;
+    }
+    addToCart(product);
+    toast.success("Producto agregado al carrito");
+  };
 
   return (
     <>
@@ -58,22 +75,18 @@ const HomePage = () => {
                     </CardBody>
                   </div>
                   <CardFooter className="flex flex-col gap-y-2 pt-0">
-                    <Button
-                      fullWidth={true}
-                      variant="gradient"
-                      className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    >
-                      <ShoppingCartIcon className="size-5" />
-                      <span>Añadir al carrito</span>
-                    </Button>
-                    <Button
-                      fullWidth={true}
-                      variant="text"
-                      className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    >
-                      <span>Ver más</span>
-                      <ArrowLongRightIcon className="size-5" />
-                    </Button>
+                    {userRole !== "Administrador" && (
+                      <Button
+                        fullWidth={true}
+                        variant="gradient"
+                        className="flex items-center justify-center gap-2 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                        onClick={() => handleClickCart(product)}
+                      >
+                        <ShoppingCartIcon className="size-5" />
+                        <span>Añadir al carrito</span>
+                      </Button>
+                    )}
+                    <OneProductView product={product} role={userRole} />
                   </CardFooter>
                 </Card>
               </Col>
